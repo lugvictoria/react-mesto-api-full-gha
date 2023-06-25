@@ -11,9 +11,9 @@
 
 IP-адрес x.x.x.x
 
-Frontend https://...
+Frontend https://github.com/lugvictoria/react-mesto-auth.git
 
-Backend https://...
+Backend https://github.com/lugvictoria/express-mesto-gha.git
 
 
 # Проект Mesto (версия для сервера)

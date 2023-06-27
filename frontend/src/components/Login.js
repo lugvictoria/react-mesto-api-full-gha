@@ -1,34 +1,60 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "./Header";
+import auth from "../utils/auth";
 
-import Header from './Header';
+function Login({ handleShowInfoMessage, onLogin, setEmail }) {
+  const defaultValues = {
+    email: "",
+    password: "",
+  };
 
-function Login({onSubmit}) {
-  const [inputs, setInputs] = React.useState({
-    email: '',
-    password: '',
-  });
+  const [inputs, setInputs] = React.useState(defaultValues);
+
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const value = event.target.value;
     const name = event.target.name;
-    setInputs(state => ({...state, [name]: value}));
+    setInputs((state) => ({ ...state, [name]: value }));
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    onSubmit(inputs);
+    auth
+      .authorize(inputs)
+      .then(res => {
+        if (res.token) localStorage.setItem('token', res.token);
+        resetForm();
+        onLogin();
+        navigate("/");
+        setEmail(inputs.email);
+      })
+      .catch((err) => {
+        const text = err.message || "Что-то пошло не так! Попробуйте еще раз.";
+        handleShowInfoMessage({
+          text: text,
+          isSuccess: false,
+        });
+      });
   }
+
+  function resetForm() {
+    setInputs({ ...defaultValues });
+  }
+
   return (
     <>
       <Header>
-        <Link to="/sign-up" className="header__menu-item">Регистрация</Link>
+        <Link to="/sign-up" className="header__menu-item">
+          Регистрация
+        </Link>
       </Header>
 
       <main>
         <div className="login content__element">
           <h2 className="login__title">Вход</h2>
-          <form className="login__form" onSubmit={handleSubmit}>
+          <form className="login__form" onSubmit={handleSubmit} noValidate>
             <input
               type="email"
               className="login__input"
@@ -47,7 +73,9 @@ function Login({onSubmit}) {
               onChange={handleChange}
               required
             />
-            <button rype="submit" className="login__submit-button">Войти</button>
+            <button rype="submit" className="login__submit-button">
+              Войти
+            </button>
           </form>
         </div>
       </main>

@@ -1,5 +1,6 @@
 .popup__title {
-  margin: 0; /* Сброс стандартных стилей */
+  margin: 0;
+  /* Сброс стандартных стилей */
   font-style: normal;
   font-weight: 900;
   font-size: 24px;

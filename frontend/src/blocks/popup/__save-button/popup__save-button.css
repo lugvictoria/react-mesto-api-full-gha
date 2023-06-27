@@ -7,7 +7,7 @@
   cursor: pointer;
   border: 0;
   border-radius: 2px;
-  background-color: #000;
+  background-color: #000000;
   /* Параметры шрифта текста внутри */
   font-style: normal;
   font-weight: normal;
@@ -16,11 +16,11 @@
   text-align: center;
   color: #FFFFFF;
   /* Анимация при наведении */
-  transition: opacity .2s;
+  transition: opacity 0.2s;
 }
 
 .popup__save-button:hover {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 768px) {
@@ -31,6 +31,6 @@
   }
 }
 
-.popup__title + .popup__save-button {
+.popup__title+.popup__save-button {
   margin-top: 30px;
 }

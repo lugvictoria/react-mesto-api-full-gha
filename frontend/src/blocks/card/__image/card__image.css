@@ -5,9 +5,9 @@
   object-fit: cover;
   object-position: center;
   background-color: #111;
-  transition: opacity .3s;
+  transition: opacity 0.3s;
 }
 
 .card__image:hover {
-  opacity: .9;
+  opacity: 0.9;
 }

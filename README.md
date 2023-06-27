@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.16.148
 
 Frontend https://github.com/lugvictoria/react-mesto-auth.git
 

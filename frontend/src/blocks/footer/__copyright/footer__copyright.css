@@ -1,5 +1,6 @@
 .footer__copyright {
-  margin: 0; /* Сброс стандартного стиля */
+  margin: 0;
+  /* Сброс стандартного стиля */
   font-style: normal;
   font-weight: normal;
   font-size: 18px;

@@ -2,7 +2,7 @@
   margin: 26px 0 23px;
   padding-top: 152px;
   /* Text */
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
@@ -10,7 +10,6 @@
   text-align: center;
   color: #000000;
   /* Иконка */
-  background-image: url(../../../images/icon__success.svg);
   background-repeat: no-repeat;
   background-position: top center;
   background-size: 120px auto;

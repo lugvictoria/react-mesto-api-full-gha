@@ -4,8 +4,8 @@
   padding: 14px;
   border: none;
   border-radius: 2px;
-  background-color: #fff;
-  transition: opacity .3s;
+  background-color: #FFFFFF;
+  transition: opacity 0.3s;
   /* Text */
   font-family: 'Inter', sans-serif;
   font-style: normal;
@@ -16,7 +16,7 @@
   color: #000000;
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
   .login__submit-button {
     margin-top: 173px;
     font-size: 16px;
@@ -25,5 +25,5 @@
 }
 
 .login__submit-button:hover {
-  opacity: .85;
+  opacity: 0.85;
 }

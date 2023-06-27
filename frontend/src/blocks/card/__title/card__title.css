@@ -1,6 +1,7 @@
 .card__title {
-  margin: 0; /* Сброс стандартных стилей */
-  color: #000;
+  margin: 0;
+  /* Сброс стандартных стилей */
+  color: #000000;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;

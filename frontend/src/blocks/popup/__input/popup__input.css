@@ -1,5 +1,6 @@
 .popup__input {
-  border: 0; /* Сброс стандартного стиля */
+  border: 0;
+  /* Сброс стандартного стиля */
   border-bottom: 1px solid rgba(0, 0, 0, .2);
   padding-bottom: 13px;
   /* Параметры шрифта внутри поля */
@@ -18,4 +19,3 @@
 .popup__input:focus {
   outline-offset: 3px;
 }
-

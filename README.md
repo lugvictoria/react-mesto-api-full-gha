@@ -9,11 +9,11 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.16.148
+IP 158.160.6.211
 
-Frontend https://github.com/lugvictoria/react-mesto-auth.git
+Frontend https://lugvictoria.nomoreparties.sbs
 
-Backend https://github.com/lugvictoria/express-mesto-gha.git
+Backend https://api.lugvictoria.nomoreparties.sbs
 
 
 # Проект Mesto (версия для сервера)

@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP 51.250.105.140
+IP 51.250.107.46
 
 Frontend https://lugvictoria.nomoreparties.sbs
 

@@ -98,6 +98,6 @@ class Auth {
   }
 }
 
-const auth = new Auth('http://localhost:3000');
+const auth = new Auth('https://api.lugvictoria.nomoreparties.sbs');
 
 export default auth;

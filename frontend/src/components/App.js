@@ -45,12 +45,12 @@ function App() {
   React.useEffect(() => {
     if (isLoggedIn) {
     api.getUserInfo().then(setCurrentUser).catch(console.error);
-    console.log(currentUser);
+  
 
     api
       .getInitialCards()
       .then((res) => {
-        setCards(res);
+        setCards(res.reverse());
       })
       .catch(console.error);
   }}, [isLoggedIn]);
@@ -107,7 +107,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((person) => person._id === currentUser._id);
+    const isLiked = card.likes.some((person) => person === currentUser._id);
     api
       .toggleLike(card._id, isLiked)
       .then((newCard) => {
@@ -160,6 +160,7 @@ function App() {
 
   function handleLogin() {
     setIsLoggedIn(true);
+    navigate("/");
   }
 
   function handleLogout() {

@@ -24,11 +24,13 @@ function Login({ handleShowInfoMessage, onLogin, setEmail }) {
     auth
       .authorize(inputs)
       .then(res => {
-        if (res.token) localStorage.setItem('token', res.token);
-        resetForm();
+        if (res.token) {
+        localStorage.setItem('token', res.token);
         onLogin();
+        resetForm();
         navigate("/");
         setEmail(inputs.email);
+        }
       })
       .catch((err) => {
         const text = err.message || "Что-то пошло не так! Попробуйте еще раз.";

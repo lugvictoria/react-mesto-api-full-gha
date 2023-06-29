@@ -14,8 +14,8 @@ import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 
 import CurrentUserContext from "../contexts/CurrentUserContext";
-import api from "../utils/api";
 import auth from "../utils/auth";
+import { toggleLike, deleteCard, addNewCard, getInitialCards, changeAvatar, setUserInfo, getUserInfo  } from "../utils/api";
 
 function App() {
   // Состояние попапов
@@ -38,22 +38,37 @@ function App() {
   const [email, setEmail] = React.useState("");
 
   const navigate = useNavigate();
-
+  
   /**
    * Получение информации о пользователе и исходных карточек при открытии страницы
    */
   React.useEffect(() => {
-    if (isLoggedIn) {
-    api.getUserInfo().then(setCurrentUser).catch(console.error);
-  
-
-    api
-      .getInitialCards()
-      .then((res) => {
-        setCards(res.reverse());
-      })
-      .catch(console.error);
+      if (isLoggedIn) {
+        
+        getUserInfo().then(setCurrentUser).catch(console.error);
+    
+        
+          getInitialCards()
+          .then((res) => {
+            setCards(res.reverse());
+          })
+          .catch(console.error);  
   }}, [isLoggedIn]);
+
+    // Авторизация
+    React.useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        auth
+          .checkToken(token)
+          .then((res) => {
+            setIsLoggedIn(true);
+            navigate("/");
+            setEmail(res.email);
+          })
+          .catch(console.error);
+      }
+    }, []);
 
   // Функции открытия/закрытия попапов
   function handleEditAvatarClick() {
@@ -87,8 +102,7 @@ function App() {
 
   // Функции с изменением/обновлением данных на странице
   function handleUpdateUser(userInfo) {
-    api
-      .setUserInfo(userInfo)
+    setUserInfo(userInfo)
       .then((newUserInfo) => {
         setCurrentUser(newUserInfo);
         closeAllPopups();
@@ -97,8 +111,7 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
-    api
-      .changeAvatar(avatar)
+      changeAvatar(avatar)
       .then((newUserInfo) => {
         setCurrentUser(newUserInfo);
         closeAllPopups();
@@ -108,8 +121,7 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((person) => person === currentUser._id);
-    api
-      .toggleLike(card._id, isLiked)
+      toggleLike(card._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
@@ -119,8 +131,7 @@ function App() {
   }
 
   function handleAddPlace(newPlaceData) {
-    api
-      .addNewCard(newPlaceData)
+      addNewCard(newPlaceData)
       .then((newCard) => {
         setCards((state) => [newCard, ...state]);
         closeAllPopups();
@@ -134,8 +145,7 @@ function App() {
 
   function handleConfirmDelete() {
     const cardId = toBeDeletedCard._id;
-    api
-      .deleteCard(cardId)
+      deleteCard(cardId)
       .then(() => {
         setCards((state) => state.filter((card) => card._id !== cardId));
         closeAllPopups();
@@ -143,20 +153,7 @@ function App() {
       .catch(console.error);
   }
 
-  // Авторизация
-  React.useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      auth
-        .checkToken(token)
-        .then((res) => {
-          setIsLoggedIn(true);
-          navigate("/");
-          setEmail(res.email);
-        })
-        .catch(console.error);
-    }
-  }, []);
+
 
   function handleLogin() {
     setIsLoggedIn(true);

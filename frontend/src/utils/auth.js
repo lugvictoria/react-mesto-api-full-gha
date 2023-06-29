@@ -99,5 +99,6 @@ class Auth {
 }
 
 const auth = new Auth('https://api.lugvictoria.nomoreparties.sbs');
+// const auth = new Auth('http://localhost:3000');
 
 export default auth;

@@ -1,29 +1,18 @@
-import { apiConfig } from "./apiConfig";
-
-class Api {
-  /**
-   * Отвечает за осуществление и обработку сетевых запросов к серверу
-   * @constructor
-   *
-   * @param {object} Конфиг запросов к серверу:
-   * - baseUrl - Базовая часть url-адреса сервера
-   * - headers - Заголовки запроса, будут передаваться при каждом обращении
-   */
-  constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
-  }
+const baseUrl = `https://api.lugvictoria.nomoreparties.sbs`;
 
   /**
    * Получает данные текущего пользователя
    * @returns {Promise} Промис с ответом сервера: объект текущего пользователя
    */
-  getUserInfo() {
-    const url = `${this._baseUrl}/users/me`;
+  export function getUserInfo() {
+    const url = `${baseUrl}/users/me`;
 
     return fetch(url, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) return res.json();
       return res.json().then((res) => {
@@ -39,12 +28,15 @@ class Api {
    * - job - профессия пользователя
    * @returns {Promise} Промис с ответом сервера: обновленный объект пользователя
    */
-  setUserInfo({ name, about }) {
-    const url = `${this._baseUrl}/users/me`;
+  export function setUserInfo({ name, about }) {
+    const url = `${baseUrl}/users/me`;
 
     return fetch(url, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name,
         about,
@@ -62,12 +54,15 @@ class Api {
    * @param {string} link - Ссылка на картинку
    * @returns {Promise} Промис с ответом сервера: обновленный объект пользователя
    */
-  changeAvatar(link) {
-    const url = `${this._baseUrl}/users/me/avatar`;
+  export function changeAvatar(link) {
+    const url = `${baseUrl}/users/me/avatar`;
 
     return fetch(url, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         avatar: link,
       }),
@@ -83,12 +78,15 @@ class Api {
    * Получает исходные карточки для отрисовки
    * @returns {Promise} Промис с ответом сервера: массив карточек
    */
-  getInitialCards() {
-    const url = `${this._baseUrl}/cards`;
+  export function getInitialCards() {
+    const url = `${baseUrl}/cards`;
 
     return fetch(url, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) return res.json();
       return res.json().then((res) => {
@@ -104,12 +102,15 @@ class Api {
    * - link - ссылка на добавляемую картинку
    * @returns {Promise} Промис с ответом сервера: объект созданной карточки
    */
-  addNewCard({ name, link }) {
-    const url = `${this._baseUrl}/cards`;
+  export function addNewCard({ name, link }) {
+    const url = `${baseUrl}/cards`;
 
     return fetch(url, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         name,
         link,
@@ -127,12 +128,15 @@ class Api {
    * @param {string} cardId - ID карточки
    * @returns {Promise} Промис с ответом сервера
    */
-  deleteCard(cardId) {
-    const url = `${this._baseUrl}/cards/${cardId}`;
+  export function deleteCard(cardId) {
+    const url = `${baseUrl}/cards/${cardId}`;
 
     return fetch(url, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) return Promise.resolve();
       return res.json().then((res) => {
@@ -146,12 +150,15 @@ class Api {
    * @param {string} cardId - ID карточки
    * @returns {Promise} Промис с массивом новых лайков карточки
    */
-  _setLike(cardId) {
-    const url = `${this._baseUrl}/cards/${cardId}/likes`;
+  function setLike(cardId) {
+    const url = `${baseUrl}/cards/${cardId}/likes`;
 
     return fetch(url, {
       method: "PUT",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) return res.json();
       return res.json().then((res) => {
@@ -165,12 +172,15 @@ class Api {
    * @param {string} cardId - ID карточки
    * @returns {Promise} Промис с массивом новых лайков карточки
    */
-  _deleteLike(cardId) {
-    const url = `${this._baseUrl}/cards/${cardId}/likes`;
+  function deleteLike(cardId) {
+    const url = `${baseUrl}/cards/${cardId}/likes`;
 
     return fetch(url, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then((res) => {
       if (res.ok) return res.json();
       return res.json().then((res) => {
@@ -185,15 +195,12 @@ class Api {
    * @param {boolean} isLiked - Текущий статус лайка
    * @returns {Promise} Промис с массивом новых лайков карточки
    */
-  toggleLike(cardId, isLiked) {
+  export function toggleLike(cardId, isLiked) {
     if (isLiked) {
-      return this._deleteLike(cardId);
+      return deleteLike(cardId);
     } else {
-      return this._setLike(cardId);
+      return setLike(cardId);
     }
   }
-}
 
-const api = new Api(apiConfig);
 
-export default api;

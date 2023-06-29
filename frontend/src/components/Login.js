@@ -11,8 +11,6 @@ function Login({ handleShowInfoMessage, onLogin, setEmail }) {
 
   const [inputs, setInputs] = React.useState(defaultValues);
 
-  const navigate = useNavigate();
-
   function handleChange(event) {
     const value = event.target.value;
     const name = event.target.name;
@@ -28,7 +26,6 @@ function Login({ handleShowInfoMessage, onLogin, setEmail }) {
         localStorage.setItem('token', res.token);
         onLogin();
         resetForm();
-        navigate("/");
         setEmail(inputs.email);
         }
       })

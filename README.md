@@ -15,7 +15,6 @@ Frontend https://lugvictoria.nomoreparties.sbs
 
 Backend https://api.lugvictoria.nomoreparties.sbs
 
-
 # Проект Mesto (версия для сервера)
 Выполнен в рамках серии проектных работ в Яндекс.Практикуме по профессии «Веб-разработчик» (от начала изучения бекэнда, спринт 13, и далее).
 

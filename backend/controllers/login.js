@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { UnauthorizedError } = require('../errors/UnauthorizedError');
 
+const { NODE_ENV, SECRET_KEY } = process.env;
+
 async function login(req, res, next) {
   try {
     const { email, password } = req.body;
@@ -17,7 +19,7 @@ async function login(req, res, next) {
       {
         _id: user._id,
       },
-      'secretkey',
+      NODE_ENV === 'production' ? SECRET_KEY : 'secretkey',
       {
         expiresIn: '7d',
       },

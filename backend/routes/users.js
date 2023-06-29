@@ -43,7 +43,7 @@ users.patch(
 );
 
 users.post(
-  '/signin',
+  '/signin', auth,
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().email().required(),
@@ -54,7 +54,7 @@ users.post(
 );
 
 users.post(
-  '/signup',
+  '/signup', auth,
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().email().required(),

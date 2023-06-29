@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const { NotFoundError } = require('../errors/NotFoundError');
 const { ForbiddenError } = require('../errors/ForbiddenError');
+const { BadRequestError } = require('../errors/BadRequestError');
 
 async function getAllCards(req, res, next) {
   try {
@@ -18,6 +19,10 @@ async function createCard(req, res, next) {
     const card = await Card.create({ name, link, owner: ownerId });
     res.status(201).send(card);
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      next(new BadRequestError('Карточка не создана'));
+      return
+    }
     next(err);
   }
 }

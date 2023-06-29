@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const { NotFoundError } = require('../errors/NotFoundError');
 const { ConflictError } = require('../errors/ConflictError');
+const { BadRequestError } = require('../errors/BadRequestError');
 
 const SALT_LENGTH = 10;
 
@@ -24,8 +25,11 @@ async function createUser(req, res, next) {
         const conflict = new ConflictError('Пользователь с таким email уже существует');
         next(conflict);
         return
+      } if (err.name === 'ValidationError') {
+        next(new BadRequestError('Пользователь не создан'));
+        return
       }
-      next(err);
+        next(err);
     }
 
     user = user.toObject();
@@ -86,6 +90,10 @@ async function updateUser(req, res, next) {
     );
     res.send(user);
   } catch (err) {
+  if (err.name === 'ValidationError') {
+    next(new BadRequestError('Пользователь не обновлен'));
+    return
+  }
     next(err);
   }
 }
@@ -101,6 +109,10 @@ async function updateAvatar(req, res, next) {
     );
     res.send(user);
   } catch (err) {
+    if (err.name === 'ValidationError') {
+      next(new BadRequestError('Аватар не обновлен'));
+      return
+    }
     next(err);
   }
 }

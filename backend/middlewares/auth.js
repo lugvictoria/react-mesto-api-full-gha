@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { UnauthorizedError } = require('../errors/UnauthorizedError');
 
 const { NODE_ENV, SECRET_KEY } = process.env;
+console.log(NODE_ENV);
 
 function auth(req, res, next) {
   try {
